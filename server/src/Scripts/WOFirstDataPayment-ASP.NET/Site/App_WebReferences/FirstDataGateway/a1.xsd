@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:fdggwsapi="http://secure.linkpt.net/fdggwsapi/schemas_us/fdggwsapi" xmlns:v1="http://secure.linkpt.net/fdggwsapi/schemas_us/v1" xmlns:a1="http://secure.linkpt.net/fdggwsapi/schemas_us/a1" elementFormDefault="qualified" targetNamespace="http://secure.linkpt.net/fdggwsapi/schemas_us/a1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="../schemas_us/fdggwsapi.xsd" namespace="http://secure.linkpt.net/fdggwsapi/schemas_us/fdggwsapi" />
+  <xs:import schemaLocation="../schemas_us/v1.xsd" namespace="http://secure.linkpt.net/fdggwsapi/schemas_us/v1" />
+  <xs:element name="Action">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="a1:RecurringPayment" />
+          <xs:element ref="a1:SystemCheck" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SystemCheck">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StoreId" type="v1:String20max" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecurringPayment">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Function">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="cancel" />
+              <xs:enumeration value="install" />
+              <xs:enumeration value="modify" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="OrderId" type="v1:String100max" />
+        <xs:element minOccurs="0" name="StoreId" type="v1:String20max" />
+        <xs:element minOccurs="0" ref="v1:Billing" />
+        <xs:element minOccurs="0" ref="v1:Shipping" />
+        <xs:element minOccurs="0" ref="a1:RecurringPaymentInformation" />
+        <xs:element minOccurs="0" name="TransactionDataType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:choice>
+                <xs:element minOccurs="0" name="CreditCardData" type="v1:CreditCardData" />
+                <xs:element minOccurs="0" name="TeleCheckData" type="v1:TeleCheckData" />
+                <xs:element minOccurs="0" ref="v1:CreditCard3DSecure" />
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" ref="v1:TransactionDetails" />
+        <xs:element minOccurs="0" ref="v1:Payment" />
+        <xs:element minOccurs="0" ref="v1:Notes" />
+        <xs:element minOccurs="0" ref="v1:ItemList" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecurringPaymentInformation">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="RecurringStartDate">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[0-9]{8}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="InstallmentCount">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:maxInclusive value="999" />
+              <xs:minInclusive value="1" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="MaximumFailures">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:maxInclusive value="5" />
+              <xs:minInclusive value="1" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="InstallmentFrequency" type="xs:positiveInteger" />
+        <xs:element minOccurs="0" name="InstallmentPeriod">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="day" />
+              <xs:enumeration value="week" />
+              <xs:enumeration value="month" />
+              <xs:enumeration value="year" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Error">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="ErrorMessage" type="xs:string" />
+      </xs:all>
+      <xs:attribute name="Code" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransactionValues">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="v1:Transaction">
+          <xs:sequence>
+            <xs:element ref="fdggwsapi:FDGGWSApiOrderResponse" />
+            <xs:element name="ReceiptNumber" type="xs:string" />
+            <xs:element name="ResponseCode" type="xs:string" />
+            <xs:element name="TraceNumber" type="xs:string" />
+            <xs:element name="TransactionState" type="xs:string" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:v1="http://secure.linkpt.net/fdggwsapi/schemas_us/v1" elementFormDefault="qualified" targetNamespace="http://secure.linkpt.net/fdggwsapi/schemas_us/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Transaction" type="v1:Transaction" />
+  <xs:complexType name="Transaction">
+    <xs:sequence>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="CreditCardTxType" type="v1:CreditCardTxType" />
+          <xs:element minOccurs="0" name="CreditCardData" type="v1:CreditCardData" />
+          <xs:element minOccurs="0" ref="v1:CreditCard3DSecure" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="TeleCheckTxType" type="v1:TeleCheckTxType" />
+          <xs:element minOccurs="0" name="TeleCheckData" type="v1:TeleCheckData" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="CalculateTax" type="v1:CalculateTax" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="CalculateShipping" type="v1:CalculateShipping" />
+        </xs:sequence>
+      </xs:choice>
+      <xs:element minOccurs="0" ref="v1:Payment" />
+      <xs:element minOccurs="0" ref="v1:TransactionDetails" />
+      <xs:element minOccurs="0" ref="v1:Billing" />
+      <xs:element minOccurs="0" ref="v1:Shipping" />
+      <xs:element minOccurs="0" ref="v1:Notes" />
+      <xs:element minOccurs="0" ref="v1:ItemList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CalculateTax">
+    <xs:complexContent mixed="false">
+      <xs:extension base="v1:Options">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubTotal" type="xs:double" />
+          <xs:element minOccurs="0" name="ShipState" type="v1:String2max" />
+          <xs:element minOccurs="0" name="ShipZip" type="v1:Zip" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CalculateShipping">
+    <xs:complexContent mixed="false">
+      <xs:extension base="v1:Options">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubTotal" type="xs:double" />
+          <xs:element minOccurs="0" name="Weight" type="xs:double" />
+          <xs:element minOccurs="0" name="ItemCount" type="xs:integer" />
+          <xs:element minOccurs="0" name="CarrierType" type="xs:integer" />
+          <xs:element minOccurs="0" name="ShipState" type="v1:String2max" />
+          <xs:element minOccurs="0" name="ShipZip" type="v1:Zip" />
+          <xs:element minOccurs="0" name="ShipCountry" type="v1:String3max" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CreditCardTxType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="v1:Options">
+        <xs:sequence>
+          <xs:element name="Type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="credit" />
+                <xs:enumeration value="forceTicket" />
+                <xs:enumeration value="postAuth" />
+                <xs:enumeration value="preAuth" />
+                <xs:enumeration value="return" />
+                <xs:enumeration value="sale" />
+                <xs:enumeration value="void" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="result">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="Duplicate" />
+                <xs:enumeration value="Decline" />
+                <xs:enumeration value="Good" />
+                <xs:enumeration value="Live" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TeleCheckTxType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="v1:Options">
+        <xs:sequence>
+          <xs:element name="Type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="return" />
+                <xs:enumeration value="sale" />
+                <xs:enumeration value="void" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Options">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StoreId" type="v1:String20max" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CreditCardData">
+    <xs:sequence>
+      <xs:choice>
+        <xs:sequence>
+          <xs:group minOccurs="0" ref="v1:Card" />
+          <xs:element minOccurs="0" name="CardCodeValue" type="v1:CardCodeValue" />
+          <xs:element minOccurs="0" default="NOT_PROVIDED" name="CardCodeIndicator">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+                <xs:enumeration value="NOT_PROVIDED" />
+                <xs:enumeration value="PROVIDED" />
+                <xs:enumeration value="ILLEGIBLE" />
+                <xs:enumeration value="NO_IMPRINT" />
+                <xs:enumeration value="NOT_PRESENT" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:element name="TrackData" type="v1:TrackData" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="Card">
+    <xs:sequence>
+      <xs:element name="CardNumber">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{13,24}" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ExpMonth">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="(0[1-9])|(1[0-2])" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ExpYear">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{2}" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:simpleType name="CardCodeValue">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{3,4}|" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TrackData">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z0-9;%=^?/ ]{1,261}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TeleCheckData">
+    <xs:all>
+      <xs:element minOccurs="0" name="CheckNumber" type="v1:CheckNumber" />
+      <xs:element minOccurs="0" name="AccountType" type="v1:AccountType" />
+      <xs:element minOccurs="0" name="AccountNumber" type="v1:AccountNumber" />
+      <xs:element minOccurs="0" name="RoutingNumber" type="v1:RoutingNumber" />
+      <xs:element minOccurs="0" name="SocialSecurityNumber" type="v1:SocialSecurityNumber" />
+      <xs:element minOccurs="0" name="DrivingLicenseNumber" type="v1:DrivingLicenseNumber" />
+      <xs:element minOccurs="0" name="DrivingLicenseState" type="v1:DrivingLicenseState" />
+      <xs:element minOccurs="0" name="BankName" type="v1:BankName" />
+      <xs:element minOccurs="0" name="BankState" type="v1:BankState" />
+    </xs:all>
+  </xs:complexType>
+  <xs:simpleType name="CheckNumber">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{3,6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AccountType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="pc" />
+      <xs:enumeration value="ps" />
+      <xs:enumeration value="bc" />
+      <xs:enumeration value="bs" />
+      <xs:enumeration value="PC" />
+      <xs:enumeration value="PS" />
+      <xs:enumeration value="BC" />
+      <xs:enumeration value="BS" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AccountNumber">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{0,17}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RoutingNumber">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{0,9}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SocialSecurityNumber">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{9}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DrivingLicenseNumber">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="8" />
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DrivingLicenseState">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BankName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z ]{0,26}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BankState">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CreditCard3DSecure">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="PayerSecurityLevel">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="01" />
+              <xs:enumeration value="02" />
+              <xs:enumeration value="05" />
+              <xs:enumeration value="06" />
+              <xs:enumeration value="07" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="AuthenticationValue">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="20" />
+              <xs:maxLength value="32" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="XID">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="20" />
+              <xs:maxLength value="32" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Payment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HostedDataID" type="v1:String128max" />
+        <xs:group minOccurs="0" ref="v1:Amount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="Amount">
+    <xs:sequence>
+      <xs:element name="ChargeTotal">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:pattern value="([1-9]([0-9]{0,3}))?[0-9](\.[0-9]{1,2})?" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="SubTotal">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:pattern value="([1-9]([0-9]{0,3}))?[0-9](\.[0-9]{1,2})?" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Tax">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:pattern value="([1-9]([0-9]{0,3}))?[0-9](\.[0-9]{1,2})?" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="VATTax">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:pattern value="([1-9]([0-9]{0,3}))?[0-9](\.[0-9]{1,2})?" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Shipping">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:pattern value="([1-9]([0-9]{0,3}))?[0-9](\.[0-9]{1,2})?" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="TransactionDetails">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="UserID" type="xs:string" />
+        <xs:element minOccurs="0" name="InvoiceNumber" type="v1:String48max" />
+        <xs:element minOccurs="0" name="OrderId" type="v1:String100max" />
+        <xs:element minOccurs="0" name="Ip">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])|" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="ReferenceNumber">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="(NEW)?[0-9a-zA-Z]{1,6}" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="TDate">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="[0-9]{10}|" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" ref="v1:Recurring" />
+        <xs:element minOccurs="0" ref="v1:TaxExempt" />
+        <xs:element minOccurs="0" ref="v1:TerminalType" />
+        <xs:element minOccurs="0" default="ECI" name="TransactionOrigin">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="ECI" />
+              <xs:enumeration value="MOTO" />
+              <xs:enumeration value="RETAIL" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PONumber" type="v1:String48max" />
+        <xs:element minOccurs="0" name="DeviceID" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Billing">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="CustomerID" type="v1:String32max" />
+        <xs:element minOccurs="0" name="Name" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Company" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Address1" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Address2" type="v1:String96max" />
+        <xs:element minOccurs="0" name="City" type="v1:String96max" />
+        <xs:element minOccurs="0" name="State" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Zip" type="v1:Zip" />
+        <xs:element minOccurs="0" name="Country" type="v1:String32max" />
+        <xs:element minOccurs="0" name="Phone" type="v1:String32max" />
+        <xs:element minOccurs="0" name="Fax" type="v1:String32max" />
+        <xs:element minOccurs="0" name="Email" type="v1:String64max" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Shipping">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="Weight" type="xs:double" />
+        <xs:element minOccurs="0" name="Items" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Carrier" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Total" type="xs:double" />
+        <xs:element minOccurs="0" name="Type" type="v1:String20max" />
+        <xs:element minOccurs="0" name="Name" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Address1" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Address2" type="v1:String96max" />
+        <xs:element minOccurs="0" name="City" type="v1:String96max" />
+        <xs:element minOccurs="0" name="State" type="v1:String96max" />
+        <xs:element minOccurs="0" name="Zip" type="v1:Zip" />
+        <xs:element minOccurs="0" name="Country" type="v1:String32max" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="String128max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String100max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String96max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="96" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String64max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String48max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String32max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String24max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String20max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String3max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="String2max">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Zip">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="25" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Notes">
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0" name="Comments" type="xs:string" />
+        <xs:element minOccurs="0" name="ReferredBy" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ItemList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemEntry">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Id" type="xs:string" />
+              <xs:element minOccurs="0" name="Description" type="xs:string" />
+              <xs:element name="Price" type="xs:string" />
+              <xs:element name="Quantity" type="xs:string" />
+              <xs:element minOccurs="0" name="Serial" type="xs:string" />
+              <xs:element minOccurs="0" name="ESDtype" type="xs:string" />
+              <xs:element minOccurs="0" name="Softfile" type="xs:string" />
+              <xs:element minOccurs="0" name="OptionList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="OptionEntry">
+                      <xs:complexType>
+                        <xs:all>
+                          <xs:element name="OptionName" type="xs:string" />
+                          <xs:element name="OptionValue" type="xs:string" />
+                        </xs:all>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element default="No" name="Recurring">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Yes" />
+        <xs:enumeration value="No" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element default="No" name="TaxExempt">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Yes" />
+        <xs:enumeration value="No" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="TerminalType">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Standalone" />
+        <xs:enumeration value="Unspecified" />
+        <xs:enumeration value="POS" />
+        <xs:enumeration value="Unattended" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+</xs:schema>

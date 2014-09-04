@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:fdggwsapi="http://secure.linkpt.net/fdggwsapi/schemas_us/fdggwsapi" xmlns:v1="http://secure.linkpt.net/fdggwsapi/schemas_us/v1" xmlns:a1="http://secure.linkpt.net/fdggwsapi/schemas_us/a1" elementFormDefault="qualified" targetNamespace="http://secure.linkpt.net/fdggwsapi/schemas_us/fdggwsapi" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="../schemas_us/v1.xsd" namespace="http://secure.linkpt.net/fdggwsapi/schemas_us/v1" />
+  <xs:import schemaLocation="../schemas_us/a1.xsd" namespace="http://secure.linkpt.net/fdggwsapi/schemas_us/a1" />
+  <xs:element name="FDGGWSApiOrderRequest">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="v1:Transaction" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FDGGWSApiActionRequest">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="a1:Action" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FDGGWSApiOrderResponse">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="ApprovalCode" type="xs:string" />
+        <xs:element name="AVSResponse" type="xs:string" />
+        <xs:element name="CommercialServiceProvider" type="xs:string" />
+        <xs:element name="ErrorMessage" type="xs:string" />
+        <xs:element name="OrderId" type="xs:string" />
+        <xs:element name="ProcessorApprovalCode" type="xs:string" />
+        <xs:element name="ProcessorReferenceNumber" type="xs:string" />
+        <xs:element name="ProcessorResponseCode" type="xs:string" />
+        <xs:element name="ProcessorResponseMessage" type="xs:string" />
+        <xs:element name="TDate" type="xs:string" />
+        <xs:element name="TransactionResult" type="xs:string" />
+        <xs:element name="TransactionTime" type="xs:string" />
+        <xs:element name="TransactionID" type="xs:string" />
+        <xs:element name="CalculatedTax" type="xs:string" />
+        <xs:element name="CalculatedShipping" type="xs:string" />
+        <xs:element name="TransactionScore" type="xs:string" />
+        <xs:element name="AuthenticationResponseCode" type="xs:string" />
+        <xs:element name="FraudAction" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FDGGWSApiActionResponse">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Success" type="xs:boolean" />
+        <xs:element name="ApprovalCode" type="xs:string" />
+        <xs:element name="AVSResponse" type="xs:string" />
+        <xs:element name="CommercialServiceProvider" type="xs:string" />
+        <xs:element name="ErrorMessage" type="xs:string" />
+        <xs:element name="OrderId" type="xs:string" />
+        <xs:element name="ProcessorApprovalCode" type="xs:string" />
+        <xs:element name="ProcessorReceiptNumber" type="xs:string" />
+        <xs:element name="ProcessorReferenceNumber" type="xs:string" />
+        <xs:element name="ProcessorResponseCode" type="xs:string" />
+        <xs:element name="ProcessorResponseMessage" type="xs:string" />
+        <xs:element name="ProcessorTraceNumber" type="xs:string" />
+        <xs:element name="TDate" type="xs:string" />
+        <xs:element name="TerminalID" type="xs:string" />
+        <xs:element name="TransactionResult" type="xs:string" />
+        <xs:element name="TransactionTime" type="xs:string" />
+        <xs:element name="TransactionID" type="xs:string" />
+        <xs:element name="TransactionScore" type="xs:string" />
+        <xs:element name="FraudAction" type="xs:string" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
