@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="api_GetDataGameRewards.aspx.cs" Inherits="api_GetDataGameRewards" %>

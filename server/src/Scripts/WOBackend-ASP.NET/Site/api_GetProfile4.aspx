@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="api_GetProfile4.aspx.cs" Inherits="api_GetProfile4" %>

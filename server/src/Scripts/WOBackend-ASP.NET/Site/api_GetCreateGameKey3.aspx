@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="api_GetCreateGameKey3.aspx.cs" Inherits="api_GetCreateGameKey3" %>

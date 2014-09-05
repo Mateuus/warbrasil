@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="api_SkillLearn.aspx.cs" Inherits="api_SkillLearn" %>

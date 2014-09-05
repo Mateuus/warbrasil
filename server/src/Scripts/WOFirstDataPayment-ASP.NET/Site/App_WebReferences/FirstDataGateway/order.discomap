@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Results>
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///Z:/1/certs/c%23/schemas_us/a1.xsd" filename="a1.xsd" />
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///Z:/1/certs/c%23/schemas_us/fdggwsapi.xsd" filename="fdggwsapi.xsd" />
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="file:///Z:/1/certs/c%23/wsdl/order.wsdl" filename="order.wsdl" />
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///Z:/1/certs/c%23/schemas_us/v1.xsd" filename="v1.xsd" />
-  </Results>
-</DiscoveryClientResultsFile>
