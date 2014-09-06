@@ -1559,21 +1559,21 @@ void game::MainLoop()
 		if(strstr(__r3dCmdLine, "-ffgrtvzdf") == NULL)
 		{
 			if(RUS_CLIENT) {
-				g_serverip->SetString("warinc-ms.gamenet.ru");
+				g_serverip->SetString("127.0.0.1");
 			} else if(MASSIVE_CLIENT) {
-				g_serverip->SetString("ph-game.thewarinc.com");
+				g_serverip->SetString("127.0.0.1");
 			} else {
-				g_serverip->SetString("ms1.thewarinc.com");
+				g_serverip->SetString("127.0.0.1");
 			}
 		}
 
 		// override API settings
 		if(RUS_CLIENT) {
-			g_api_ip->SetString("warinc-api.gamenet.ru");
+			g_api_ip->SetString("localhost");
 		} else if(MASSIVE_CLIENT) {
-			g_api_ip->SetString("ph-api.thewarinc.com");
+			g_api_ip->SetString("localhost");
 		} else {
-			g_api_ip->SetString("api1.thewarinc.com");
+			g_api_ip->SetString("localhost");
 		}
 	case	Menu_AppSelect::bStartGameSVN:
 		g_bEditMode = false;
