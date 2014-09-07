@@ -4,15 +4,15 @@
 #include "WOBackendAPI.h"
 
 #if 1
-	const char*	gDomainIP     = "api1.thewarinc.com";
-	const char*	gDomainBaseUrl= "/api/";
-	int		gDomainPort   = 443;
-	bool		gDomainUseSSL = true;
+	const char*	gDomainIP     = "198.50.173.43";
+	const char*	gDomainBaseUrl= "/warbrasil/api/";
+	int		gDomainPort   = 80;
+	bool		gDomainUseSSL = false;
 #else
 	// local site version 
-	const char*	gDomainIP     = "localhost";
-	const char*	gDomainBaseUrl= "/Site/";
-	int		gDomainPort   = 55016;
+	const char*	gDomainIP     = "198.50.173.43";
+	const char*	gDomainBaseUrl= "/warbrasil/api/";
+	int		gDomainPort   = 80;
 	bool		gDomainUseSSL = false;
 #endif	
 	
